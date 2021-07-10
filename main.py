@@ -7,13 +7,16 @@ client = discord.Client()
 
 @client.event
 async def on_ready():
-    print("{0.user}".format(client))
+    activity = discord.Game(name="&ayuda")
+    await client.change_presence(status=discord.Status.idle, activity=activity)
+    print("{0.user}".format(client) + " online")
+
 
 @client.event
 async def on_message(message):
     if message.author != client.user:
-        if message.content.startswith("&help"):
-           await message.channel.send("GUIA DE AYUDA")
+        if message.content.startswith("&ayuda"):
+            await message.channel.send("GUIA DE AYUDA")
         return
 
 
