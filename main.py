@@ -10,7 +10,7 @@ client = commands.Bot(command_prefix="&", intents=intents)
 @client.event
 async def on_ready():
     activity = discord.Game(name="&ayuda")
-    await client.change_presence(status=discord.Status.idle, activity=activity)
+    await client.change_presence(activity=activity)
     print("{0.user}".format(client) + " online")
 
 
@@ -19,7 +19,10 @@ async def ayuda(ctx):
     await ctx.send("GUIA DE AYUDA\n"
                    "------------------\n"
                    "&join ---> \n"
-                   "&leave --> \n")
+                   "&leave --> \n"
+                   "&pause --> \n"
+                   "&resume --> \n"
+                   "&stop --> \n")
 
 
 @client.command(pass_context=True)
@@ -64,4 +67,4 @@ async def stop(ctx):
     voice.stop()
 
 
-client.run("ODYzNTQyNDcxODA0MTkwNzUx.YOoamQ.jquraZAAbYTatJR8oI3sRP_iW9s")
+client.run("TOKEN")
