@@ -1,8 +1,11 @@
 import discord
-import os
-import requests
+from discord.ext import commands
 
-client = discord.Client()
+
+intents = discord.Intents.default()
+intents.members = True
+
+client = commands.Bot(command_prefix="&", intents=intents)
 
 
 @client.event
@@ -12,12 +15,30 @@ async def on_ready():
     print("{0.user}".format(client) + " online")
 
 
-@client.event
-async def on_message(message):
-    if message.author != client.user:
-        if message.content.startswith("&ayuda"):
-            await message.channel.send("GUIA DE AYUDA")
-        return
+@client.command()
+async def ayuda(ctx):
+    await ctx.send("GUIA DE AYUDA\n"
+                   "------------------\n"
+                   "&join ---> \n"
+                   "&leave --> \n")
+
+
+@client.command(pass_context=True)
+async def join(ctx):
+    if (ctx.author.voice):
+        channel = ctx.message.author.voice.channel
+        await channel.connect()
+    else:
+        await ctx.send("Chakal, tenes que estar en un canal de voz para que pueda entrar viiiiiiiiiiste")
+
+
+@client.command(pass_context=True)
+async def leave(ctx):
+    if (ctx.voice_client):
+        await ctx.guild.voice_client.disconnect()
+        await ctx.send("Me tome el palo chakal")
+    else:
+        await ctx.send("Que flashas, no estoy en un canal de voz")
 
 
 client.run("TOKEN")
