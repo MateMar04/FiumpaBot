@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 
-
 intents = discord.Intents.default()
 intents.members = True
 
@@ -41,4 +40,28 @@ async def leave(ctx):
         await ctx.send("Que flashas, no estoy en un canal de voz")
 
 
-client.run("TOKEN")
+@client.command(pass_context=True)
+async def pause(ctx):
+    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
+    if voice.is_playing():
+        voice.pause()
+    else:
+        await ctx.send("Pelotudo no estoy diciendo nada")
+
+
+@client.command(pass_context=True)
+async def resume(ctx):
+    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
+    if voice.is_paused():
+        voice.resume()
+    else:
+        await ctx.send("Pelotudo no estoy pausado")
+
+
+@client.command(pass_context=True)
+async def stop(ctx):
+    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
+    voice.stop()
+
+
+client.run("ODYzNTQyNDcxODA0MTkwNzUx.YOoamQ.jquraZAAbYTatJR8oI3sRP_iW9s")
